@@ -21,4 +21,6 @@ var app = builder.Build();
 // The UseStaticFiles method enables support for serving static content from the wwwroot folder
 app.UseStaticFiles();
 app.MapDefaultControllerRoute();
+
+SeedData.EnsurePopulated(app);
 app.Run();
