@@ -50,9 +50,12 @@ namespace SportsStore.Tests
                 new Product {ProductID = 2, Name = "P2"}, 
                 new Product {ProductID = 3, Name = "P3"}, 
                 new Product {ProductID = 4, Name = "P4"}, 
-                new Product {ProductID = 5, Name = "P5"} }).AsQueryable<Product>()); 
+                new Product {ProductID = 5, Name = "P5"} 
+            }).AsQueryable<Product>()); 
+
             HomeController controller = new HomeController(mock.Object); 
             controller.PageSize = 3; 
+
             // Act
             IEnumerable<Product> result = 
                 (controller.Index(2) as ViewResult)?.ViewData.Model 
