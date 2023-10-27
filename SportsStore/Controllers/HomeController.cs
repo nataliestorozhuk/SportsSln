@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SportsStore.Models;
+using SportsStore.Models.ViewModels;
+
 
 namespace SportsStore.Controllers
 {
@@ -15,11 +18,21 @@ namespace SportsStore.Controllers
             _repository = repo;
         }
 
-        public IActionResult Index(int productPage = 1) 
-            => View(_repository.Products
+        public ViewResult Index(int productPage = 1) 
+            => View(new ProductsListViewModel
+        {
+            Products = _repository.Products
                 .OrderBy(p => p.ProductID)
                 .Skip((productPage - 1) * PageSize)
-                .Take(PageSize));
+                .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = productPage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Products.Count()
+                }
+            });
         
     }
 }
